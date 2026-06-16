@@ -422,6 +422,10 @@ input:checked + .slider:before { background:#fff; transform:translateX(18px); }
           <div><div style="font-size:13px;font-weight:600;">🎵 Background music</div><div style="font-size:11px;color:var(--muted);">Ambient loop</div></div>
           <label class="switch"><input type="checkbox" id="bgToggle2" onchange="onBgToggle2(this.checked)"><span class="slider"></span></label>
         </div>
+        <div id="ambientSubPause" style="display:none;flex-direction:column;gap:6px;background:#222;border-radius:9px;padding:9px 12px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;"><input type="radio" name="ambientTypePause" value="nature" onchange="onAmbientTypePause()"><span>🌿 Nature (birds + wind)</span></label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;"><input type="radio" name="ambientTypePause" value="chime" onchange="onAmbientTypePause()"><span>🎶 Calm chime melody</span></label>
+        </div>
       </div>
 
       <button onclick="closePause()" style="width:100%;margin-top:16px;background:var(--accent);border:none;border-radius:var(--radius);padding:14px;font-size:15px;font-weight:800;color:#fff;cursor:pointer;">Resume game ▶</button>
@@ -647,24 +651,41 @@ if('speechSynthesis' in window){if(window.speechSynthesis.getVoices().length)pop
 
 function openPause(){
   if('speechSynthesis' in window) window.speechSynthesis.cancel();
-  // sync pause toggles to match current state
+  stopBg();
   document.getElementById('voiceToggle2').checked = document.getElementById('voiceToggle').checked;
   document.getElementById('sfxToggle2').checked   = document.getElementById('sfxToggle').checked;
-  document.getElementById('bgToggle2').checked    = document.getElementById('bgToggle').checked;
-  // mirror voice dropdown — preserve current selection, don't reset it
+  const bgOn = document.getElementById('bgToggle').checked;
+  document.getElementById('bgToggle2').checked = bgOn;
+  // sync ambient type radios
+  const currentType = document.querySelector('input[name="ambientType"]:checked').value;
+  document.querySelectorAll('input[name="ambientTypePause"]').forEach(r=>{ r.checked = r.value===currentType; });
+  const subP = document.getElementById('ambientSubPause');
+  subP.style.display = bgOn ? 'flex' : 'none';
   const sel=document.getElementById('voiceSelect');
   const selP=document.getElementById('voiceSelectPause');
-  if(sel.options.length>1){
-    selP.innerHTML=sel.innerHTML;
-    selP.selectedIndex=sel.selectedIndex;
-  } else {
-    // voices not loaded yet — trigger load
-    populateVoicesBoth();
-  }
+  if(sel.options.length>1){ selP.innerHTML=sel.innerHTML; selP.selectedIndex=sel.selectedIndex; }
+  else { populateVoicesBoth(); }
   document.getElementById('pauseOverlay').style.display='flex';
 }
+function onAmbientTypePause(){
+  // sync back to main radio
+  const val = document.querySelector('input[name="ambientTypePause"]:checked').value;
+  document.querySelector(`input[name="ambientType"][value="${val}"]`).checked = true;
+  // restart loop with new type if music is on
+  if(document.getElementById('bgToggle2').checked){
+    const c=ctx(); if(c&&c.state==='suspended') c.resume();
+    setTimeout(startBg, 80);
+  }
+}
 function closePause(){
+  // Force resume AudioContext right inside this click handler
+  const c=ctx();
+  if(c && c.state==='suspended') c.resume();
   document.getElementById('pauseOverlay').style.display='none';
+  // Restart bg if it should be on
+  if(document.getElementById('bgToggle').checked){
+    setTimeout(startBg, 80);
+  }
 }
 function onVoiceChangePause(){
   const selP=document.getElementById('voiceSelectPause');
@@ -689,7 +710,10 @@ function populateVoicesBoth(){
 }
 function onBgToggle2(checked){
   document.getElementById('bgToggle').checked=checked;
-  if(checked) startBg(); else stopBg();
+  document.getElementById('ambientSubPause').style.display = checked ? 'flex' : 'none';
+  const c=ctx();
+  if(c && c.state==='suspended') c.resume();
+  if(checked) setTimeout(startBg, 80); else stopBg();
 }
 function onBgToggle(){document.getElementById('ambientSub').classList.toggle('visible',document.getElementById('bgToggle').checked);if(!document.getElementById('bgToggle').checked)stopBg()}
 function onAmbientType(){if(bgRunning)startBg()}
