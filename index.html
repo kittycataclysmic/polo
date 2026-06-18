@@ -77,7 +77,7 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 }
 /* Grass blade rows */
 .grass-blades-1 {
-  position:absolute; bottom:40%; left:0; right:0; height:36px;
+  position:absolute; bottom:45%; left:0; right:0; height:44px;
   background-image:
     repeating-linear-gradient(to right,
       transparent 0px, transparent 6px,
@@ -98,7 +98,7 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
     90% 70%, 91% 20%, 92% 80%, 93% 5%, 94% 60%, 95% 15%, 96% 75%, 97% 0%, 98% 65%, 99% 20%, 100% 100%);
 }
 .grass-blades-2 {
-  position:absolute; bottom:36%; left:0; right:0; height:28px;
+  position:absolute; bottom:43.5%; left:0; right:0; height:32px;
   background:#3a9a18;
   clip-path:polygon(
     0% 100%, 0.5% 30%, 1.5% 90%, 2.5% 5%, 3.5% 70%, 4.5% 20%, 5.5% 85%, 6.5% 0%, 7.5% 65%, 8.5% 25%,
@@ -115,7 +115,7 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 }
 /* Flowers — full width including centre */
 .flowers {
-  position:absolute; bottom:38%; left:0; right:0; height:32px;
+  position:absolute; bottom:47%; left:0; right:0; height:32px;
   background-image:
     radial-gradient(circle 6px at 2% 60%,#f5e040 49%,transparent 50%),
     radial-gradient(circle 5px at 5% 40%,#f58040 49%,transparent 50%),
@@ -145,7 +145,7 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 }
 /* Flower row 2 — offset, slightly lower */
 .flowers-2 {
-  position:absolute; bottom:33%; left:0; right:0; height:28px;
+  position:absolute; bottom:45.5%; left:0; right:0; height:28px;
   background-image:
     radial-gradient(circle 5px at 3.5% 55%,#f58040 49%,transparent 50%),
     radial-gradient(circle 6px at 7.5% 70%,#f5e040 49%,transparent 50%),
@@ -174,7 +174,7 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 }
 /* Rocks / pebbles near ground */
 .pebbles {
-  position:absolute; bottom:28%; left:0; right:0; height:20px;
+  position:absolute; bottom:44.5%; left:0; right:0; height:16px;
   background-image:
     radial-gradient(ellipse 18px 10px at 8% 70%,#888 49%,transparent 50%),
     radial-gradient(ellipse 12px 8px at 22% 60%,#999 49%,transparent 50%),
@@ -185,7 +185,7 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
     radial-gradient(ellipse 18px 10px at 95% 72%,#888 49%,transparent 50%);
 }
 /* Palm trees — keep near edges but higher */
-.palm { position:absolute; bottom:38%; pointer-events:none; }
+.palm { position:absolute; bottom:43%; pointer-events:none; }
 .left-palm1  { left:-2%;  width:clamp(70px,9vw,140px);  height:auto; }
 .left-palm2  { left:9%;   width:clamp(55px,7.5vw,115px); height:auto; }
 .right-palm1 { right:-2%; width:clamp(70px,9vw,140px);  height:auto; }
@@ -194,7 +194,7 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 /* Dinos — sit ON the ground, spread across full width */
 .dino {
   position:absolute; pointer-events:auto; cursor:pointer;
-  bottom:28%; transition:transform 0.15s;
+  bottom:45%; transition:transform 0.15s;
   filter:drop-shadow(0 6px 12px rgba(0,0,0,0.22));
 }
 .dino:hover { transform:scale(1.08) translateY(-6px); }
@@ -208,12 +208,12 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 }
 /* Individual dino sizes + positions — full width spread */
 .dino-brachi { left:0%;   width:clamp(75px,9vw,148px);  animation:idleFloat 4s ease-in-out infinite; }
-.dino-stego  { left:14%;  width:clamp(80px,10vw,165px); animation:idleFloat 5s ease-in-out infinite 0.8s; bottom:27%; }
-.dino-trice  { right:14%; width:clamp(80px,10vw,168px); animation:idleFloat 4.5s ease-in-out infinite 1.2s; bottom:27%; }
+.dino-stego  { left:14%;  width:clamp(80px,10vw,165px); animation:idleFloat 5s ease-in-out infinite 0.8s; }
+.dino-trice  { right:14%; width:clamp(80px,10vw,168px); animation:idleFloat 4.5s ease-in-out infinite 1.2s; }
 .dino-trex   { right:0%;  width:clamp(70px,9vw,148px);  animation:idleFloat 3.8s ease-in-out infinite 0.4s; }
-.dino-ptero  { right:26%; width:clamp(80px,11vw,175px); bottom:auto; top:10%;
+.dino-ptero  { left:8%;  width:clamp(65px,8vw,130px); bottom:auto; top:8%;
   animation:pterFly 6s ease-in-out infinite; }
-.dino-ankylo { right:6%;  width:clamp(80px,11vw,180px); bottom:26%;
+.dino-ankylo { right:6%;  width:clamp(80px,11vw,180px);
   animation:idleFloat 5.5s ease-in-out infinite 2s; }
 @keyframes idleFloat {
   0%,100%{transform:translateY(0)}
@@ -254,17 +254,18 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 
 /* Outer shell — full width, always full viewport height */
 .wrap {
-  width:100%; min-height:100vh;
+  width:100%; height:100vh;
   padding:0; position:relative; z-index:1;
   display:flex; flex-direction:column;
+  overflow:hidden;
 }
 
 /* topbar merged into setup card */
 
 /* ── Setup screen — centred card over the dino scene ── */
-.setup-screen { display:none; }
+.setup-screen { display:none; position:absolute; pointer-events:none; left:0; top:0; }
 .setup-screen.active {
-  flex:1; display:flex; flex-direction:column;
+  position:relative; flex:1; display:flex; flex-direction:column;
   align-items:center; justify-content:center;
   padding:20px 16px 60px;
 }
@@ -327,10 +328,10 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 .prefs-link:hover { color:rgba(240,236,227,0.7); }
 
 /* ── GAME SCREEN ── */
-.game-screen { display:none !important; }
+.game-screen { display:none; position:absolute; pointer-events:none; left:0; top:0; }
 .game-screen.active {
-  display:flex !important; flex-direction:column; align-items:center;
-  flex:1; padding:24px 24px 60px;
+  position:relative; display:flex; flex-direction:column; align-items:center;
+  flex:1; padding:24px 24px 60px; pointer-events:auto;
 }
 .game-inner { width:100%; max-width:520px; }
 
@@ -435,10 +436,10 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
 
 /* ── Finish screen ── */
-.finish-screen { display:none !important; }
+.finish-screen { display:none; position:absolute; pointer-events:none; left:0; top:0; }
 .finish-screen.active {
-  display:flex !important; flex-direction:column; align-items:center;
-  justify-content:center; flex:1; padding:40px 24px 80px;
+  position:relative; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; flex:1; padding:40px 24px 80px; pointer-events:auto;
 }
 .finish-inner { width:100%; max-width:540px; }
 
@@ -511,10 +512,10 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 .finish-btn-secondary:hover { border-color:var(--accent); }
 
 /* ── Album screen ── */
-.album-screen { display:none; }
+.album-screen { display:none; position:absolute; pointer-events:none; left:0; top:0; }
 .album-screen.active {
-  display:flex; flex-direction:column; align-items:center;
-  flex:1; padding:24px 24px 60px;
+  position:relative; display:flex; flex-direction:column; align-items:center;
+  flex:1; padding:24px 24px 60px; pointer-events:auto;
 }
 .album-inner { width:100%; max-width:700px; }
 .album-topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
