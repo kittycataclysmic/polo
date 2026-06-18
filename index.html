@@ -263,9 +263,9 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 /* topbar merged into setup card */
 
 /* ── Setup screen — centred card over the dino scene ── */
-.setup-screen { display:none; position:absolute; pointer-events:none; left:0; top:0; }
+.setup-screen { display:none; }
 .setup-screen.active {
-  position:relative; flex:1; display:flex; flex-direction:column;
+  position:relative; pointer-events:auto; flex:1; display:flex; flex-direction:column;
   align-items:center; justify-content:center;
   padding:20px 16px 60px;
 }
@@ -328,17 +328,21 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 .prefs-link:hover { color:rgba(240,236,227,0.7); }
 
 /* ── GAME SCREEN ── */
-.game-screen { display:none; position:absolute; pointer-events:none; left:0; top:0; }
+.game-screen { display:none; }
 .game-screen.active {
   position:relative; display:flex; flex-direction:column; align-items:center;
-  flex:1; padding:24px 24px 60px; pointer-events:auto;
+  /* cap at top 54vh — keeps bins above the grass/dino layer */
+  height:54vh; max-height:54vh; overflow-y:auto;
+  padding:14px 16px 10px; pointer-events:auto;
+  scrollbar-width:none;
 }
-.game-inner { width:100%; max-width:520px; }
+.game-screen.active::-webkit-scrollbar { display:none; }
+.game-inner { width:100%; max-width:500px; }
 
 /* Progress only — no stat clutter */
 .game-header {
   display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:16px;
+  margin-bottom:8px;
 }
 .progress-label { font-size:12px; color:var(--muted); letter-spacing:0.02em; }
 .pause-btn {
@@ -347,16 +351,16 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
   color:var(--muted); cursor:pointer;
 }
 .pause-btn:hover { color:var(--ink); border-color:var(--accent); }
-.progress-bar { height:3px; background:var(--border); border-radius:999px; overflow:hidden; margin-bottom:24px; }
+.progress-bar { height:3px; background:var(--border); border-radius:999px; overflow:hidden; margin-bottom:10px; }
 .progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:999px; transition:width 0.4s ease; width:0%; }
 
 /* ── Fossil card — full width, centre stage ── */
 .fossil-card {
   background:var(--surface); border:1px solid var(--border);
-  border-radius:var(--radius); padding:28px 24px 24px;
-  text-align:center; margin-bottom:16px; position:relative;
-  min-height:220px; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:8px;
+  border-radius:var(--radius); padding:16px 16px 14px;
+  text-align:center; margin-bottom:10px; position:relative;
+  min-height:160px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:5px;
 }
 /* Subtle ambient bg */
 .fossil-card-bg {
@@ -365,17 +369,17 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
   pointer-events:none;
 }
 .fossil-icon {
-  font-size:64px; line-height:1; position:relative;
+  font-size:48px; line-height:1; position:relative;
   animation:breathe 4s ease-in-out infinite;
   filter:drop-shadow(0 6px 16px rgba(0,0,0,0.5));
 }
 @keyframes breathe { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
 .fossil-name {
-  font-size:22px; font-weight:900; letter-spacing:-0.5px;
+  font-size:18px; font-weight:900; letter-spacing:-0.5px;
   color:var(--ink); position:relative;
 }
 .fossil-fact {
-  font-size:13px; color:var(--muted); line-height:1.55;
+  font-size:12px; color:var(--muted); line-height:1.45;
   max-width:280px; position:relative;
 }
 .char-speech {
@@ -406,7 +410,7 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 @keyframes flyU { to{transform:translate(0,-160%) scale(0.35);opacity:0} }
 
 /* ── Feedback line ── */
-.feedback { text-align:center; font-size:13px; font-weight:700; min-height:20px; margin-bottom:10px; letter-spacing:0.02em; }
+.feedback { text-align:center; font-size:13px; font-weight:700; min-height:18px; margin-bottom:6px; letter-spacing:0.02em; }
 .feedback.correct   { color:var(--green); }
 .feedback.incorrect { color:var(--red); }
 
@@ -414,8 +418,8 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 .bins { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
 .bin-btn {
   background:var(--surface); border:1px solid var(--border);
-  border-radius:var(--radius); padding:16px 8px;
-  display:flex; flex-direction:column; align-items:center; gap:4px;
+  border-radius:var(--radius); padding:11px 8px;
+  display:flex; flex-direction:column; align-items:center; gap:3px;
   cursor:pointer; transition:border-color 0.15s, transform 0.1s;
   touch-action:manipulation;
 }
@@ -436,7 +440,7 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
 
 /* ── Finish screen ── */
-.finish-screen { display:none; position:absolute; pointer-events:none; left:0; top:0; }
+.finish-screen { display:none; }
 .finish-screen.active {
   position:relative; display:flex; flex-direction:column; align-items:center;
   justify-content:center; flex:1; padding:40px 24px 80px; pointer-events:auto;
@@ -512,10 +516,10 @@ html,body { background:var(--bg); color:var(--ink); font-family:var(--font); min
 .finish-btn-secondary:hover { border-color:var(--accent); }
 
 /* ── Album screen ── */
-.album-screen { display:none; position:absolute; pointer-events:none; left:0; top:0; }
+.album-screen { display:none; }
 .album-screen.active {
-  position:relative; display:flex; flex-direction:column; align-items:center;
-  flex:1; padding:24px 24px 60px; pointer-events:auto;
+  position:relative; pointer-events:auto; display:flex; flex-direction:column; align-items:center;
+  flex:1; padding:24px 24px 60px;
 }
 .album-inner { width:100%; max-width:700px; }
 .album-topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
@@ -1391,6 +1395,7 @@ function resetGame(){
   ['finish','game'].forEach(id=>{document.getElementById(id).classList.remove('active')});
   document.getElementById('setup').classList.add('active');
 }
+</script>
 <script>
 /* Dino click interactions */
 function dinoReact(el, text, type) {
